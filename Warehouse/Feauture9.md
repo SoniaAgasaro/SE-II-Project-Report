@@ -9,42 +9,42 @@
 ### US-9.1: Create and Add a supplier order
 **As a** office employee
 **I want to** add and create a supplier order for needed items
-**So that** record what the warehouse is ordering and replenish inventory
+**So that** I record what the warehouse is ordering and replenish inventory
 
 ### US-9.2: Edit a supplier order
 **As a** office employee
 **I want to** edit a supplier order
-**So that** correct or update an order before it is completed
+**So that** I correct or update an order before it is completed 
 
 ### US-9.3: Delete a supplier order
 **As a** office employee
 **I want to** delete a supplier order
-**So that** remove an order that should no longer be maintained
+**So that** I remove an order that should no longer be maintained
 
 ### US-9.4: Calculate order quantity
 **As a** authorized office employee
 **I want to** use minimum and maximum inventory levels
-**So that** order the needed amount
+**So that** I order the needed amount of items
 
 ### US-9.5: Receive a supplier order
 **As a** warehouse employee
 **I want to** check in a supplier shipment
-**So that** record what was actually received
+**So that** I record what was actually received
 
 ### US-9.6: Compare received quantity
 **As a** warehouse employee
 **I want to** compare received quantity with ordered quantity
-**So that** identify quantity differences
+**So that** I identify quantity differences
 
 ### US-9.7: Put away received items
 **As a** warehouse employee
 **I want to** place received items in warehouse locations
-**So that** store inventory in the appropriate location
+**So that** I store inventory in the appropriate location
 
 ### US-9.8: Move inventory
 **As a** warehouse employee
 **I want to** move inventory from one warehouse location to another
-**So that** keep inventory location information accurate
+**So that** I keep inventory location information accurate
 
 
 ## Functional Requirements

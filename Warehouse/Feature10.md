@@ -9,57 +9,57 @@
 ### US-10.1: Add a customer order
 **As a** office employee
 **I want to** add a customer order
-**So that** record what a customer wants to purchase
+**So that** I record what a customer wants to purchase
 
 ### US-10.2: Edit a customer order
 **As a** office employee
 **I want to** edit a customer order
-**So that** correct or update the order before processing
+**So that** I correct or update the order before processing
 
 ### US-10.3: Delete a customer order
 **As a** office employee
-**I want to** delete a customer order
-**So that** remove an order that should no longer be maintained
+**I want to** delete a customer order from the system
+**So that** I remove an order that should no longer be maintained in the system
 
 ### US-10.4: Receive a customer order
 **As a** office employee
 **I want to** record a customer's order
-**So that** start fulfillment of the customer order
+**So that** I start fulfillment of the customer order
 
 ### US-10.5: Pick items on a customer order
 **As a** warehouse employee
 **I want to** pick the requested items
-**So that** prepare the order for shipment
+**So that** I prepare the order for shipment
 
 ### US-10.6: Record picked quantity
 **As a** warehouse employee
 **I want to** record the actual quantity picked
-**So that** identify shortages before shipping
+**So that** I identify shortages before shipping
 
 ### US-10.7: Ship a customer order
 **As a** warehouse employee
 **I want to** verify and package a picked order
-**So that** send the order to the customer
+**So that** I send the order to the customer
 
 ### US-10.8: Prepare shipment documentation
 **As a** warehouse employee
 **I want to** prepare a Bill of Lading
-**So that** document what is being shipped
+**So that** I document what is being shipped
 
 ### US-10.9: Deliver a customer order
 **As a** truck driver
 **I want to** deliver a customer shipment
-**So that** complete the delivery
+**So that** I complete the delivery
 
 ### US-10.10: Confirm delivery
 **As a** truck driver or receiving customer representative
 **I want to** record confirmation of the order received
-**So that** document what the customer actually received
+**So that** I document what the customer actually received
 
 ### US-10.11: Review delivered quantities
 **As a** warehouse manager
 **I want to** view delivered quantities for customer shipments
-**So that** monitor what customers received
+**So that** I monitor what customers received
 
 ## Functional Requirements
 
