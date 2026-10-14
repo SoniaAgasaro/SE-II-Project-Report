@@ -1,65 +1,82 @@
-# Feature5: Inventory Maintenance
+# Feature: Supplier Maintenance
+
 **Feature ID:** 5
-**Branch pattern:** `feature/5-inventory-maintenance`
+**Branch pattern:** `feature/5-supplier-maintenance`
+**Status:** Draft
 **Created:** 2026-09-28
-**Input:** Maintaining the quantity and location of items held in warehouse
+**Updated:** 2026-10-13
+**Input:** Maintain supplier contacts, ordering details, item relationships, and supplier performance information.
 
 ## User Stories
 
-### US-5.1: Maintain inventory
-**As a** warehouse employee
-**I want to** add, edit, or delete inventory information
-**So that** I keep the records of inventory current and up-to-date
+### US-5.1: Add a supplier
+**As an** inventory clerk
+**I want to** add a supplier and its contact information
+**So that** I order products from the supplier
 
-### US-5.2: Count inventory
-**As a** warehouse employee
-**I want to** record the inventory count
-**So that** I compare the recorded quantity with the actual quantity
+**Independent test:** Verify that the system supports the ability to add a supplier and its contact information.
 
-### US-5.3: Adjust inventory
-**As an** authorized warehouse employee
-**I want to** adjust inventory when the actual quantity changes
-**So that** I keep inventory accurate
+### US-5.2: Update supplier details
+**As an** inventory clerk
+**I want to** update supplier information and terms
+**So that** I use current supplier information
 
+**Independent test:** Verify that the system supports the ability to update supplier information and terms.
+
+### US-5.3: Deactivate supplier
+**As an** inventory clerk
+**I want to** deactivate a supplier no longer used
+**So that** I stop new orders without losing order history
+
+**Independent test:** Verify that the system supports the ability to deactivate a supplier no longer used.
+
+### US-5.4: Maintain supplier item pricing
+**As an** inventory clerk
+**I want to** record a supplier's price for an item
+**So that** I calculate supplier orders using the correct supplier cost
+
+**Independent test:** Verify that the system supports the ability to record a supplier's price for an item.
 
 ## Functional Requirements
 
-- **FR-001**: The system MUST allow an authorized warehouse employee to add inventory information.
-- **FR-002**: The system MUST allow an authorized warehouse employee to edit inventory information.
-- **FR-003**: The system MUST allow an authorized warehouse employee to delete inventory information.
-- **FR-004**: The system MUST record the item and warehouse location associated with the inventory 
-- **FR-005**: The system MUST allow an authorized warehouse employee to record an inventory count
-- **FR-006**: The system MUST allow an authorized warehouse employee to adjust inventory when an inventory difference is identified
-- **FR-007**: The system MUST allow inventory to reflect movement from one warehouse location to another
-
-## Initial Data Model
-
-- Inventory: item, quantity, warehouse(location)
+- **FR-001**: The system MUST allow an authorized office employee to add and update supplier records.
+- **FR-002**: The system MUST allow an authorized office employee to deactivate a supplier.
+- **FR-003**: The system MUST maintain supplier name, address, phone, email, and the supplier's customer/account number when provided.
+- **FR-004**: The system SHOULD support supplier terms, typical shipping time, rating, and active status.
+- **FR-005**: The system MUST associate items and supplier-specific prices with the relevant supplier.
+- **FR-006**: The system MUST NOT permanently delete a supplier referenced by an order or historical record.
+- **FR-007**: The system MUST retain historical supplier order records when a supplier is deactivated.
 
 ## Key Entities
 
-- **Inventory**: recorded quantity of an item in the warehouse
-- **Warehouse**: location/place where the item is stored
+- **Supplier**: a business from which the warehouse buys products.
+- **Item**: a product that may be purchased from a supplier.
+- **Supplier Item Price**: a supplier's cost for an item.
 
-## Acceptance Criteria
+## Initial Data Model
 
-### US-5.1 — Maintain Inventory
+- Supplier: supplier_id, name, address, phone, email, supplier_account_number, terms, shipping_time, rating, active_status.
+- Supplier Item Price: supplier_item_price_id, supplier_id, item_id, cost, effective date if tracked.
 
-#### Scenario: Inventory can be adjusted
-* **Given** an authorized warehouse employee identifies an inventory difference
-* **When** the employee records the adjustment
-* **Then** the recorded inventory quantity reflects the new adjustments
+## Gherkin AC
 
-### US-5.2 — Count Inventory
+### US-5.1 — Add a supplier
 
-#### Scenario: Inventory count is known
-* **Given** an authorized warehouse employee need to know the amount of inventory maintained
-* **When** the employee checks the records of inventory
-* **Then** they can view the amount of inventory/count (full inventory list)
+#### Scenario: Supplier is added
+* **Given** an inventory clerk has the supplier's required information
+* **When** the clerk saves the supplier
+* **Then** the system stores the supplier and makes it available for supplier orders
 
-### US-5.3 — Maintain Inventory
+### US-5.2 — Update supplier details
 
-#### Scenario: Inventory can be mainatined
-* **Given** an authorized warehouse employee adds, deletes, or edits an inventory
-* **When** the employee adjust the inventory list
-* **Then** the recorded inventory quantity reflects the new adjustments
+#### Scenario: Supplier with order history is deactivated
+* **Given** a supplier has historical orders
+* **When** the clerk deactivates the supplier
+* **Then** the system marks the supplier inactive and keeps its orders
+
+### US-5.3 — Deactivate supplier
+
+#### Scenario: Supplier item cost is maintained
+* **Given** a supplier and item exist
+* **When** the clerk records the supplier's cost for the item
+* **Then** the system associates that cost with the correct supplier and item

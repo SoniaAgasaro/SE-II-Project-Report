@@ -1,135 +1,75 @@
-# Feature10: Customer Order Maintenance
+# Feature: Create and Send Supplier Orders
+
 **Feature ID:** 10
-**Branch pattern:** `feature/10-customer-order-maintenance`
+**Branch pattern:** `feature/10-create-send-supplier-orders`
+**Status:** Draft
 **Created:** 2026-09-28
-**Input:** Maintaining customer orders received by the warehouse, receive cutomer orders so they can be picked, shipped, and delivered, Pick the items requested by customer, verify package and ship the customer order, record delivery of customer orders, and confirmation of the quantity received
+**Updated:** 2026-10-13
+**Input:** Determine replenishment needs using minimum and maximum stock levels and send supplier orders electronically when supported.
 
 ## User Stories
 
-### US-10.1: Add a customer order
-**As a** office employee
-**I want to** add a customer order
-**So that** I record what a customer wants to purchase
+### US-10.1: Identify items needing replenishment
+**As an** inventory clerk
+**I want to** identify items whose quantity is below the minimum level
+**So that** I replenish stock before it runs out
 
-### US-10.2: Edit a customer order
-**As a** office employee
-**I want to** edit a customer order
-**So that** I correct or update the order before processing
+**Independent test:** Verify that the system supports the ability to identify items whose quantity is below the minimum level.
 
-### US-10.3: Delete a customer order
-**As a** office employee
-**I want to** delete a customer order from the system
-**So that** I remove an order that should no longer be maintained in the system
+### US-10.2: Calculate order quantity
+**As an** inventory clerk
+**I want to** calculate the quantity needed to bring stock up to its maximum level
+**So that** I order the intended replenishment amount
 
-### US-10.4: Receive a customer order
-**As a** office employee
-**I want to** record a customer's order
-**So that** I start fulfillment of the customer order
+**Independent test:** Verify that the system supports the ability to calculate the quantity needed to bring stock up to its maximum level.
 
-### US-10.5: Pick items on a customer order
-**As a** warehouse employee
-**I want to** pick the requested items
-**So that** I prepare the order for shipment
+### US-10.3: Send supplier order
+**As an** inventory clerk
+**I want to** send the supplier order electronically
+**So that** I reduce manual order handling
 
-### US-10.6: Record picked quantity
-**As a** warehouse employee
-**I want to** record the actual quantity picked
-**So that** I identify shortages before shipping
-
-### US-10.7: Ship a customer order
-**As a** warehouse employee
-**I want to** verify and package a picked order
-**So that** I send the order to the customer
-
-### US-10.8: Prepare shipment documentation
-**As a** warehouse employee
-**I want to** prepare a Bill of Lading
-**So that** I document what is being shipped
-
-### US-10.9: Deliver a customer order
-**As a** truck driver
-**I want to** deliver a customer shipment
-**So that** I complete the delivery
-
-### US-10.10: Confirm delivery
-**As a** truck driver or receiving customer representative
-**I want to** record confirmation of the order received
-**So that** I document what the customer actually received
-
-### US-10.11: Review delivered quantities
-**As a** warehouse manager
-**I want to** view delivered quantities for customer shipments
-**So that** I monitor what customers received
+**Independent test:** Verify that the system supports the ability to send the supplier order electronically.
 
 ## Functional Requirements
 
-- **FR-001**: The system MUST allow an authorized office employee to add a customer order.
-- **FR-002**: The system MUST allow an authorized office employee to edit a customer order.
-- **FR-003**: The system MUST allow an authorized office employee to delete a customer order.
-- **FR-004**: The system MUST associate a customer order with a customer.
-- **FR-005**: The system MUST record the item and quantity ordered for each customer order line.
-- **FR-006**: The system MUST allow an authorized employee to receive a customer order.
-- **FR-007**: The system MUST record the customer, order date, PO number, items, and quantities provided by the customer order information.
-- **FR-008**: The system MUST make a received customer order available for picking.
-- **FR-009**: The system MUST show the items and quantities to be picked for a customer order.
-- **FR-010**: The system MUST allow a warehouse employee to record the quantity picked for each item.
-- **FR-011**: The system MUST allow the picked quantity to be less than the ordered quantity when insufficient inventory is available.
-- **FR-012**: The system MUST retain the actual picked quantity for the customer order.
-- **FR-013**: The system MUST support verification of the item being picked using its product information.
-- **FR-014**: The system MUST allow an authorized warehouse employee to verify a picked customer order before shipment.
-- **FR-015**: The system MUST allow an authorized warehouse employee to record that the order has been packaged for shipment.
-- **FR-016**: The system MUST support a Bill of Lading for a customer shipment.
-- **FR-017**: The system MUST record the quantity shipped for the customer order.
-- **FR-018**: The system MUST associate the shipment with the customer order and customer.
-- **FR-019**: The system MUST allow a driver to record delivery information for a customer order.
-- **FR-020**: The system MUST record the quantity delivered for each item when delivery information is available.
-- **FR-021**: The system MUST record confirmation that the customer received the order.
-- **FR-022**: The system MUST make delivered quantity available for comparison with the shipped quantity.
-- **FR-023**: The system MUST provide the warehouse manager with delivered quantity information.
-- **FR-024**: The system MUST allow delivered quantities to be associated with the corresponding customer order and item.
-- **FR-025**: The system MUST support comparing delivered quantity with the quantity shipped.
+- **FR-001**: The system MUST compare the current inventory quantity with the item's minimum stock level.
+- **FR-002**: The system MUST identify an item for replenishment when its inventory quantity is below the minimum.
+- **FR-003**: When inventory quantity is below the minimum, the system MUST calculate the order quantity as maximum stock level minus the current inventory quantity, subject to clarification of the stock scope.
+- **FR-004**: The system MUST support a minimum and maximum stock level for an item; the values are intended to reflect how quickly the item sells.
+- **FR-005**: The system MUST associate the replenishment order with a supplier and the relevant item quantities.
+- **FR-006**: The system SHOULD support sending supplier orders electronically.
 
+## Key Entities
 
-## Acceptance Criteria
+- **Item**: product subject to replenishment.
+- **Inventory Balance**: current on-hand quantity for an item and stock scope.
+- **Supplier Order**: replenishment order sent to a supplier.
 
-### US-10.1 — Add a customer order
+## Initial Data Model
 
-#### Scenario: A customer order can be added
-* **Given** the employee enters the customer and ordered items
-* **When** the employee saves the order
-* **Then** the customer order is available for processing
+- Item or Item-Warehouse Stock Policy: item_id, warehouse_id if applicable, minimum_quantity, maximum_quantity, sales-rate basis if tracked.
+- Inventory Balance: item_id, warehouse_id, location_id, quantity_on_hand.
+- Supplier Order Line: item_id, quantity_ordered, supplier_id or parent supplier order.
 
-### US-10.2 — Receive a customer order
+## Gherkin AC
 
-#### Scenario: A customer order becomes available for fulfillment
-* **Given** a valid customer order is received
-* **When** the order is saved
-* **Then** the order is available to the picking process
+### US-10.1 — Identify items needing replenishment
 
-### US-10.3 — Pick items on a customer order
+#### Scenario: Item below minimum is flagged
+* **Given** an item's current quantity and minimum level are recorded
+* **When** the replenishment process checks the item
+* **Then** the system identifies the item as needing an order
 
-#### Scenario: A customer order is picked
-* **Given** a customer order is ready for picking
-* **When** the warehouse employee records quantities picked
-* **Then** the system stores the actual picked quantities for the order
+### US-10.2 — Calculate order quantity
 
-### US-10.4 — Ship a customer order
+#### Scenario: Order quantity brings stock to maximum
+* **Given** an item's current quantity is below minimum and a maximum level exists
+* **When** the system calculates replenishment quantity
+* **Then** the calculated quantity equals maximum quantity minus current inventory quantity
 
-#### Scenario: A picked order is shipped
-* **Given** the customer order has been picked
-* **When** the employee verifies and packages the order and records shipment
-* **Then** the system records the shipment and its quantity
+### US-10.3 — Send supplier order
 
-### US-10.5 — Deliver a customer order
-
-#### Scenario: A delivery is confirmed
-* **Given** a driver delivers a customer order
-* **When** delivery information and received quantities are recorded
-* **Then** the system stores the delivery confirmation and delivered quantity
-
-### US-10.6 — Review delivered quantities
-
-#### Scenario: Delivered quantities can be reviewed
-* **Given** a manager requests delivered quantity information
-* **When** the system retrieves recorded delivery quantities
-* **Then** the manager can see delivered quantities associated with the shipment/order
+#### Scenario: Supplier order is sent
+* **Given** a valid supplier order is ready to send
+* **When** the clerk chooses the send action
+* **Then** the system sends or records the electronic transmission result according to the configured method
