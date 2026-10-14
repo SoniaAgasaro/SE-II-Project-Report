@@ -1,54 +1,71 @@
-# Feature6: Employee Maintenance
+# Feature: Customer Maintenance
+
 **Feature ID:** 6
-**Branch pattern:** `feature/6-employee-maintenance`
+**Branch pattern:** `feature/6-customer-maintenance`
+**Status:** Draft
 **Created:** 2026-09-28
-**Input:** Maintaining employees who work in the office, warehouse, or truck drivers
+**Updated:** 2026-10-13
+**Input:** Maintain customer information needed to receive, fulfill, route, and deliver customer orders.
 
 ## User Stories
 
-### US-6.1: Add an employee
-**As an** authorized office employee
-**I want to** add an employee
-**So that** I make the employee available to the system
+### US-6.1: Add a customer
+**As an** office employee
+**I want to** add a customer and customer number
+**So that** I accept orders from that customer
 
-### US-6.2: Edit an employee
-**As an** authorized office employee
-**I want to** edit an employee
-**So that** I keep the employee information current
+**Independent test:** Verify that the system supports the ability to add a customer and customer number.
 
-### US-6.3: Delete an employee
-**As an** authorized office employee
-**I want to** delete an employee
-**So that** I remove an employee who is nolonger working for the warehouse/company
+### US-6.2: Update customer information
+**As an** office employee
+**I want to** update customer contact and delivery information
+**So that** I use accurate order and delivery details
 
+**Independent test:** Verify that the system supports the ability to update customer contact and delivery information.
+
+### US-6.3: Deactivate customer
+**As an** office employee
+**I want to** deactivate a customer no longer ordering
+**So that** I preserve historical customer orders
+
+**Independent test:** Verify that the system supports the ability to deactivate a customer no longer ordering.
 
 ## Functional Requirements
 
-- **FR-001**: The system MUST allow an authorized office employee to add an employee
-- **FR-002**: The system MUST allow an authorized office employee to edit an employee
-- **FR-003**: The system MUST allow an authorized office employee to remove an employee
-- **FR-004**: The system MUST identify the employee's work type as office, warehouse, or truck driver when that information is maintained
+- **FR-001**: The system MUST allow an authorized office employee to add and update customer records.
+- **FR-002**: The system MUST maintain a customer number and the customer information needed for orders and delivery.
+- **FR-003**: The system MUST allow a customer to be deactivated.
+- **FR-004**: The system MUST NOT permanently delete a customer referenced by customer orders, routes, shipments, or deliveries.
+- **FR-005**: The system MUST retain historical customer orders when a customer is deactivated.
 
+## Key Entities
 
-## Acceptance Criteria
+- **Customer**: a store or business that purchases products from the warehouse.
+- **Route**: a delivery route that may include the customer.
 
-### US-6.1 — Add an employee
+## Initial Data Model
 
-#### Scenario: An employee can be added
-* **Given** the authorized employee enters employee's information
-* **When** the authorized employee saves the employee's information
-* **Then** the new employee is available in the system
+- Customer: customer_id, customer_number, name, address, phone, email, active_status.
 
-### US-6.2 — Edit an employee
+## Gherkin AC
 
-#### Scenario: An employee's information can be edited
-* **Given** the authorized employee edits employee's information
-* **When** the authorized employee saves the employee's information
-* **Then** the employee's information is maintained as current
+### US-6.1 — Add a customer
 
-### US-6.3 — Delete an employee
+#### Scenario: Customer is added
+* **Given** an office employee has the customer's required details
+* **When** the employee saves the customer
+* **Then** the system stores the customer and makes the customer available for orders
 
-#### Scenario: An employee can be deleted
-* **Given** the authorized employee removes/deletes an employee
-* **When** the authorized employee saves the record
-* **Then** the employee is removed from the system
+### US-6.2 — Update customer information
+
+#### Scenario: Customer with order history is deactivated
+* **Given** a customer has existing orders
+* **When** the employee deactivates the customer
+* **Then** the system marks the customer inactive and retains the order history
+
+### US-6.3 — Deactivate customer
+
+#### Scenario: Required customer number is missing
+* **Given** the employee is entering a customer record
+* **When** the employee attempts to save without a customer number
+* **Then** the system identifies the missing required information and does not save the record
